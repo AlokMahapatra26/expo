@@ -1,46 +1,33 @@
 'use client';
 
-import { useState } from 'react';
-import { Header } from '@/components/dashboard/header';
-import { Stats } from '@/components/dashboard/stats';
-import { ExpenseList } from '@/components/dashboard/expense-list';
-import { ExpenseForm } from '@/components/forms/expense-form';
-import { DebugInfo } from '@/components/debug/debug-info'; // Add this
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Loading } from '@/components/ui/loading';
 
-export default function DashboardPage() {
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
+export default function HomePage() {
+  const router = useRouter();
 
-  const handleRefresh = () => {
-    setRefreshKey(prev => prev + 1);
-  };
+  useEffect(() => {
+    // Check if user has token
+    const checkAuthAndRedirect = async () => {
+      try {
+        const response = await fetch('/api/auth/check');
+        
+        if (response.ok) {
+          // User is authenticated, go to dashboard
+          router.push('/dashboard');
+        } else {
+          // User is not authenticated, go to signin
+          router.push('/signin');
+        }
+      } catch (error) {
+        // Error checking auth, go to signin
+        router.push('/signin');
+      }
+    };
 
-  return (
-    <div className="min-h-screen bg-zinc-50">
-      <Header onAddExpense={() => setShowAddForm(true)} />
-      
-      <main className="container mx-auto px-4 py-6">
-        <div className="space-y-6">
-          <Stats key={`stats-${refreshKey}`} />
-          
-          <div>
-            <h2 className="text-lg font-medium mb-4">Recent Transactions</h2>
-            <ExpenseList 
-              refresh={refreshKey > 0} 
-              onRefresh={handleRefresh} 
-            />
-          </div>
+    checkAuthAndRedirect();
+  }, [router]);
 
-          {/* Temporary debug info - remove after fixing */}
-          <DebugInfo />
-        </div>
-      </main>
-
-      <ExpenseForm
-        isOpen={showAddForm}
-        onClose={() => setShowAddForm(false)}
-        onSuccess={handleRefresh}
-      />
-    </div>
-  );
+  return <Loading />;
 }
