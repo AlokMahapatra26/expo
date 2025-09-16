@@ -5,7 +5,6 @@ import { Header } from '@/components/dashboard/header';
 import { Stats } from '@/components/dashboard/stats';
 import { ExpenseList } from '@/components/dashboard/expense-list';
 import { ExpenseForm } from '@/components/forms/expense-form';
-import { DebugInfo } from '@/components/debug/debug-info'; // Add this
 
 export default function DashboardPage() {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -30,9 +29,6 @@ export default function DashboardPage() {
               onRefresh={handleRefresh} 
             />
           </div>
-
-          {/* Temporary debug info - remove after fixing */}
-          <DebugInfo />
         </div>
       </main>
 
