@@ -1,13 +1,19 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development'
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Your existing config here
   typescript: {
-    // Dangerously disable type checking during builds
     ignoreBuildErrors: true,
   },
   eslint: {
-    // Disable ESLint during builds
     ignoreDuringBuilds: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = withPWA(nextConfig);

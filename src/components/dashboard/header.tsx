@@ -25,15 +25,13 @@ export function Header({ onAddExpense }: HeaderProps) {
     <header className="border-b border-zinc-200 bg-white">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-medium">Expense Manager</h1>
+          <h1 className="text-xl font-medium">Expger</h1>
           <div className="flex gap-2">
             <Button onClick={onAddExpense}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Entry
+              <Plus className="h-4 w-4" />
             </Button>
             <Button variant="outline" onClick={handleSignOut}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
+              <LogOut className="h-4 w-4 " />
             </Button>
           </div>
         </div>
